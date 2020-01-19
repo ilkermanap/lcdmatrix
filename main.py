@@ -1,26 +1,11 @@
-from PySide.QtGui import *
-from PySide.QtCore import *
+from PySide2.QtWidgets import QApplication, QDialog
+
 from ui_lcdmatrix import Ui_Dialog
+from lcdmatrix import LCDMatrix
+
 import sys
 import random, time
 
-class LCDMatrix(QWidget):
-    def __init__(self, parent, x,y):
-        super(LCDMatrix, self).__init__(parent)
-        layout = QGridLayout()
-        self.values = {}
-        for j in range(y):
-            self.values[j] = {}
-            for i in range(x):
-                print "keys: y=", j, " x:",i
-                self.values[j][i] = QLCDNumber()
-                layout.addWidget(self.values[j][i], i,j)
-
-        parent.setLayout(layout)
-
-    def setValue(self, x,y,val):
-        n = val + self.values[y][x].value()
-        self.values[y][x].display(n)
         
 
 class MainWindow(QDialog, Ui_Dialog):
@@ -44,7 +29,7 @@ class MainWindow(QDialog, Ui_Dialog):
             if y == int(self.lineEdit.text()):
                 y = 0
             val = random.randint(1,5)
-            print x,y, val
+
             self.lcd.setValue(x,y, val)
 
             QApplication.processEvents()
